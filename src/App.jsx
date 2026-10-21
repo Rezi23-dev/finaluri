@@ -1,13 +1,18 @@
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Router from "./Router";
+import "./App.css";
+import Banner from "./components/Banner/Banner";
 
-import React from 'react';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import './App.css';
 function App() {
   return (
     <div className="app">
       <Header />
-      <main className="main-content"></main>
+      <Banner />
+      <main className="main-content">
+        <Router />
+      </main>
+
       <Footer />
     </div>
   );

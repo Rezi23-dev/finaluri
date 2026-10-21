@@ -16,18 +16,6 @@ const Footer = () => {
                     </p>
                 </div>
 
-                <nav className="footer-nav">
-                    <a href="/">Home</a>
-                    <a href="#movies">Movies</a>
-                    <a href="#popular">Popular</a>
-                </nav>
-                 <p>
-                    © 2026 MoviesHub. All rights reserved.
-                </p>
-
-                <a href="#top" className="footer-back">
-                    Back to top ↑
-                </a>
             </div>
 
             <div className="footer-bottom">

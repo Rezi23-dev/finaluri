@@ -1,7 +1,7 @@
 .footer {
     width: 100%;
     margin-top: auto;
-    padding: 50px 7% 24px;
+    padding: 30px 7% 24px;
     background: #161616;
     border-top: 1px solid #222;
     color: #adadad;
@@ -12,11 +12,15 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 60px;
-    padding-bottom: 45px;
+    padding-bottom: 10px;
 }
 
 .footer-brand {
-    max-width: 360px;
+    width: 1880px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
 .footer-logo {
@@ -70,7 +74,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    padding-top: 24px;
+    padding-top: 14px;
     border-top: 1px solid #222;
     font-size: 12px;
 }
