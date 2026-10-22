@@ -14,7 +14,6 @@ function App() {
       <main className="main-content">
         <Router />
       </main>
-
       <Footer />
     </div>
   );

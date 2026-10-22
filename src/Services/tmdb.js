@@ -11,17 +11,23 @@ const options = {
 };
 
 export const getTrending = async () => {
-    const response = await fetch(
-        `${BASE_URL}/trending/all/week`,
-        options
+    const pages = await Promise.all(
+        [1, 2, 3, 4, 5].map(async (page) => {
+            const response = await fetch(
+                `${BASE_URL}/trending/all/week?language=en-US&page=${page}`,
+                options
+            );
+
+            if (!response.ok) {
+                throw new Error("ფილმების ჩატვირთვა ვერ მოხერხდა");
+            }
+
+            const data = await response.json();
+            return data.results;
+        })
     );
 
-    if (!response.ok) {
-        throw new Error("მონაცემების წამოღება ვერ მოხერხდა");
-    }
-
-    const data = await response.json();
-    return data.results;
+    return pages.flat().slice(0, 50);
 };
 
 
@@ -62,4 +68,54 @@ export const getUpcoming = async () => {
                 movies.findIndex((item) => item.id === movie.id) === index
         )
         .slice(0, 5);
+};
+
+
+
+
+
+
+export const getDetails = async (mediaType, id) => {
+    const response = await fetch(
+        `${BASE_URL}/${mediaType}/${id}?language=en-US`,
+        options
+    );
+
+    if (!response.ok) {
+        throw new Error("ფილმის ინფორმაციის ჩატვირთვა ვერ მოხერხდა");
+    }
+
+    return response.json();
+};
+
+export const getVideos = async (mediaType, id) => {
+    const response = await fetch(
+        `${BASE_URL}/${mediaType}/${id}/videos?language=en-US`,
+        options
+    );
+
+    if (!response.ok) {
+        throw new Error("თრეილერის ჩატვირთვა ვერ მოხერხდა");
+    }
+
+    const data = await response.json();
+
+
+    const trailer =
+        data.results.find(
+            (video) =>
+                video.site === "YouTube" &&
+                video.type === "Trailer" &&
+                video.official
+        ) ||
+        data.results.find(
+            (video) =>
+                video.site === "YouTube" &&
+                video.type === "Trailer"
+        ) ||
+        data.results.find(
+            (video) => video.site === "YouTube"
+        );
+
+    return trailer || null;
 };

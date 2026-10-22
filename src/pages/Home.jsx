@@ -1,7 +1,8 @@
-
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getTrending } from "../Services/tmdb";
-import "./Home.css"
+import "./Home.css";
+
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
 const Home = () => {
@@ -29,33 +30,44 @@ const Home = () => {
 
     return (
         <section className="home">
-            <h2>Trending Movies & TV Shows</h2>
+            <h2>Trending Movies &amp; TV Shows</h2>
 
             <div className="movie-grid">
-                {items.map((item) => (
-                    <article key={`${item.media_type}-${item.id}`}>
-                        <img
-                            src={
-                                item.poster_path
-                                    ? `${IMAGE_URL}${item.poster_path}`
-                                    : "/no-poster.png"
-                            }
-                            alt={item.title || item.name}
-                        />
+                {items.map((item) => {
+                    const mediaType =
+                        item.media_type === "tv" ? "tv" : "movie";
 
-                        <h3>{item.title || item.name}</h3>
+                    return (
+                        <Link
+                            key={`${mediaType}-${item.id}`}
+                            to={`/details/${mediaType}/${item.id}`}
+                            className="movie-card-link"
+                        >
+                            <article className="movie-card">
+                                <img
+                                    src={
+                                        item.poster_path
+                                            ? `${IMAGE_URL}${item.poster_path}`
+                                            : "/no-poster.png"
+                                    }
+                                    alt={item.title || item.name}
+                                />
 
-                        <p>
-                            {item.media_type === "movie"
-                                ? "ფილმი"
-                                : item.media_type === "tv"
-                                    ? "სერიალი"
-                                    : "სხვა"}
-                        </p>
+                                <h3>{item.title || item.name}</h3>
 
-                        <p>⭐ {item.vote_average?.toFixed(1)}</p>
-                    </article>
-                ))}
+                                <p>
+                                    {mediaType === "movie"
+                                        ? "ფილმი"
+                                        : "სერიალი"}
+                                </p>
+
+                                <p>
+                                    ⭐ {item.vote_average?.toFixed(1) ?? "N/A"}
+                                </p>
+                            </article>
+                        </Link>
+                    );
+                })}
             </div>
         </section>
     );
