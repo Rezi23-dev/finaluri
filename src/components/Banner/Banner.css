@@ -1,17 +1,20 @@
 .banner {
     position: relative;
     width: 100%;
-    height: 500px;
+    height: 600px;
     overflow: hidden;
-    background: #111827;
+    background: #111;
+    color: #fff;
 }
 
 .banner-img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 30%;
-    display: block;
+    object-position: center 25%;
+    animation: bannerFade 0.8s ease;
 }
 
 .banner-overlay {
@@ -19,43 +22,115 @@
     inset: 0;
     display: flex;
     align-items: center;
-    padding: 0 8%;
     background: linear-gradient(90deg,
-            rgba(0, 0, 0, 0.85),
-            rgba(0, 0, 0, 0.2));
+            rgba(0, 0, 0, 0.92) 0%,
+            rgba(0, 0, 0, 0.65) 40%,
+            rgba(0, 0, 0, 0.12) 100%);
 }
 
 .banner-content {
-    color: white;
-    max-width: 500px;
+    position: relative;
+    z-index: 1;
+    width: min(650px, 90%);
+    padding: 40px;
 }
 
-.banner-content h2 {
-    font-size: 30px;
-    margin-bottom: 15px;
-    width: 1200px;
+.banner-label {
+    color: #e50914;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    margin-bottom: 16px;
 }
 
 .banner-content h1 {
-    font-size: 58px;
-    margin-bottom: 15px;
-    width: 1200px;
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 20px;
 }
 
-
-.banner-content p {
+.banner-date {
     color: #ddd;
-    font-size: 18px;
+    font-size: 15px;
+    margin-bottom: 18px;
 }
 
+.banner-description {
+    max-width: 550px;
+    color: #eee;
+    font-size: 16px;
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
+.banner-dots {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.banner-dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.banner-dot:hover {
+    background: #fff;
+    transform: scale(1.2);
+}
+
+.banner-dot.active {
+    width: 30px;
+    border-radius: 10px;
+    background: #e50914;
+}
+
+.banner-loading {
+    height: 600px;
+    background: #151515;
+}
+
+@keyframes bannerFade {
+    from {
+        opacity: 0.5;
+        transform: scale(1.02);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
 @media (max-width: 768px) {
     .banner {
-        height: 350px;
+        height: 480px;
     }
 
-    .banner-content p {
-        font-size: 15px;
+    .banner-content {
+        padding: 24px;
+    }
+
+    .banner-description {
+        font-size: 14px;
+        -webkit-line-clamp: 3;
+    }
+
+    .banner-overlay {
+        background: linear-gradient(0deg,
+                rgba(0, 0, 0, 0.95) 0%,
+                rgba(0, 0, 0, 0.55) 65%,
+                rgba(0, 0, 0, 0.2) 100%);
     }
 }
