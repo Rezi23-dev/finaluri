@@ -1,0 +1,60 @@
+.home {
+    padding: 24px;
+}
+
+.home h2 {
+    margin-bottom: 24px;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+}
+
+.movie-grid article {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.movie-grid img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.movie-grid h3 {
+    margin: 10px 0 6px;
+    font-size: 16px;
+}
+
+.movie-grid p {
+    margin: 5px 0;
+    color: #888;
+}
+
+.movie-grid article {
+    min-width: 0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+}
+
+.movie-grid article:hover {
+    transform: translateY(-5px);
+}
+
+.movie-grid img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: box-shadow 0.25s ease;
+}
+
+.movie-grid article:hover img {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
