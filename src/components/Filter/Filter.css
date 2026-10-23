@@ -1,114 +1,114 @@
-.filter {
-    width: 100%;
-    padding: 14px 0;
-    color: #fff;
-    font-family: Arial, sans-serif;
-}
-
-.filter-row {
-    display: grid;
-    grid-template-columns: minmax(140px, 1.5fr) minmax(120px, 0.7fr) 90px;
-    gap: 14px;
-    align-items: center;
-}
-
-.search-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    height: 38px;
-    padding: 0 16px;
-    background: #151515;
-    border: 1px solid #333;
-    border-radius: 8px;
-    transition: border-color 0.2s ease;
-}
-
-.search-box:focus-within {
-    border-color: #e5cc00;
-}
-
-.search-icon {
-    color: #aaa;
-    font-size: 18px;
-    flex-shrink: 0;
-}
-
-.search-box input {
-    width: 100%;
-    min-width: 0;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #fff;
-    font-size: 12px;
-}
-
-.search-box input::placeholder {
-    color: #999;
-}
-
-.genre-select {
-    width: 100%;
-    height: 38px;
-    padding: 0 12px;
-    background: #151515;
-    border: 1px solid #333;
-    border-radius: 8px;
-    color: #eee;
-    font-size: 12px;
-    cursor: pointer;
-    outline: none;
-}
-
-.genre-select:focus {
-    border-color: #e5cc00;
-}
-
-.genre-select option {
-    background: #151515;
-    color: #fff;
-}
-
-.filter-button {
-    height: 38px;
-    padding: 0 18px;
-    border: none;
-    border-radius: 8px;
-    background: #e5cc00;
-    color: #111;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.filter-button:hover {
-    background: #ffe600;
-    transform: translateY(-1px);
-}
-
-.filter-button:active {
-    transform: translateY(0);
-}
-
-@media (max-width: 600px) {
     .filter {
-        padding: 10px 0;
+        width: 100%;
+        padding: 14px 0;
+        color: #fff;
+        font-family: Arial, sans-serif;
     }
 
     .filter-row {
-        grid-template-columns: minmax(0, 1fr) 90px;
-        gap: 10px;
+        display: grid;
+        grid-template-columns: minmax(140px, 1.5fr) minmax(120px, 0.7fr) 90px;
+        gap: 14px;
+        align-items: center;
     }
 
     .search-box {
-        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        height: 38px;
+        padding: 0 16px;
+        background: #151515;
+        border: 1px solid #333;
+        border-radius: 8px;
+        transition: border-color 0.2s ease;
     }
 
-    .search-box,
-    .genre-select,
+    .search-box:focus-within {
+        border-color: #e5cc00;
+    }
+
+    .search-icon {
+        color: #aaa;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .search-box input {
+        width: 100%;
+        min-width: 0;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-size: 12px;
+    }
+
+    .search-box input::placeholder {
+        color: #999;
+    }
+
+    .genre-select {
+        width: 100%;
+        height: 38px;
+        padding: 0 12px;
+        background: #151515;
+        border: 1px solid #333;
+        border-radius: 8px;
+        color: #eee;
+        font-size: 12px;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .genre-select:focus {
+        border-color: #e5cc00;
+    }
+
+    .genre-select option {
+        background: #151515;
+        color: #fff;
+    }
+
     .filter-button {
         height: 38px;
+        padding: 0 18px;
+        border: none;
+        border-radius: 8px;
+        background: #e5cc00;
+        color: #111;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.2s ease;
     }
-}
+
+    .filter-button:hover {
+        background: #ffe600;
+        transform: translateY(-1px);
+    }
+
+    .filter-button:active {
+        transform: translateY(0);
+    }
+
+    @media (max-width: 600px) {
+        .filter {
+            padding: 10px 0;
+        }
+
+        .filter-row {
+            grid-template-columns: minmax(0, 1fr) 90px;
+            gap: 10px;
+        }
+
+        .search-box {
+            grid-column: 1 / -1;
+        }
+
+        .search-box,
+        .genre-select,
+        .filter-button {
+            height: 38px;
+        }
+    }

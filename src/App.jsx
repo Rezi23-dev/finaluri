@@ -1,3 +1,5 @@
+
+import { useState } from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Router from "./Router";
@@ -6,14 +8,22 @@ import Banner from "./components/Banner/Banner";
 import { Filter } from "./components/Filter/Filter";
 
 function App() {
+  const [filters, setFilters] = useState({
+    search: "",
+    genre: "",
+  });
+
   return (
     <div className="app">
       <Header />
       <Banner />
-      <Filter />
+
+      <Filter onFilter={setFilters} />
+
       <main className="main-content">
-        <Router />
+        <Router filters={filters} />
       </main>
+
       <Footer />
     </div>
   );

@@ -15,8 +15,14 @@ export const Filter = ({ onFilter }) => {
     const [search, setSearch] = useState("");
     const [genre, setGenre] = useState("");
 
-    const handleFilter = () => {
-        onFilter?.({ search, genre });
+    const handleFilter = (
+        newSearch = search,
+        newGenre = genre
+    ) => {
+        onFilter?.({
+            search: newSearch,
+            genre: newGenre,
+        });
     };
 
     return (
@@ -29,9 +35,15 @@ export const Filter = ({ onFilter }) => {
                         type="text"
                         placeholder="Search movies..."
                         value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setSearch(value);
+                            handleFilter(value, genre);
+                        }}
                         onKeyDown={(e) => {
-                            if (e.key === "Enter") handleFilter();
+                            if (e.key === "Enter") {
+                                handleFilter();
+                            }
                         }}
                     />
                 </div>
@@ -39,7 +51,11 @@ export const Filter = ({ onFilter }) => {
                 <select
                     className="genre-select"
                     value={genre}
-                    onChange={(e) => setGenre(e.target.value)}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        setGenre(value);
+                        handleFilter(search, value);
+                    }}
                 >
                     {genres.map((item) => (
                         <option key={item.id} value={item.id}>
@@ -50,7 +66,7 @@ export const Filter = ({ onFilter }) => {
 
                 <button
                     className="filter-button"
-                    onClick={handleFilter}
+                    onClick={() => handleFilter()}
                 >
                     Filter
                 </button>

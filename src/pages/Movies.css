@@ -1,0 +1,184 @@
+.movies-page {
+    width: 100%;
+    min-height: 70vh;
+    padding: 30px 0;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+/* სათაური */
+.movies-page h2 {
+    margin: 0 0 28px;
+    color: #e5cc00;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* ფილმების ბადე */
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 26px 18px;
+}
+
+/* ბარათზე გადასასვლელი ლინკი */
+.movie-card-link {
+    display: block;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 12px;
+    outline-offset: 4px;
+}
+
+/* ფილმის ბარათი */
+.movie-card {
+    height: 100%;
+    overflow: hidden;
+    background: #151515;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* პოსტერი */
+.movie-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    background: #222;
+    transition: filter 0.25s ease;
+}
+
+/* ფილმის სათაური */
+.movie-card h3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+
+    min-height: 42px;
+    margin: 0;
+    padding: 12px 12px 5px;
+
+    color: #f5f5f5;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+/* რეიტინგი */
+.movie-card .movie-rating {
+    margin: 0;
+    padding: 5px 12px 14px;
+    color: #e5cc00;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* Hover ეფექტი */
+.movie-card-link:hover .movie-card {
+    transform: translateY(-6px);
+    border-color: #e5cc00;
+    box-shadow: 0 10px 25px rgb(0 0 0 / 35%);
+}
+
+.movie-card-link:hover .movie-card img {
+    filter: brightness(1.08);
+}
+
+/* კლავიატურით მონიშვნა */
+.movie-card-link:focus-visible {
+    outline: 2px solid #e5cc00;
+}
+
+/* შეცდომის შეტყობინება */
+.movies-message {
+    padding: 24px 0;
+    color: #ff7777;
+    font-size: 15px;
+}
+
+/* ლეპტოპები */
+@media (max-width: 1200px) {
+    .movies-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 22px 16px;
+    }
+}
+
+/* ტაბლეტები */
+@media (max-width: 850px) {
+    .movies-page {
+        padding: 24px 0;
+    }
+
+    .movies-page h2 {
+        font-size: 25px;
+        margin-bottom: 22px;
+    }
+
+    .movies-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px 13px;
+    }
+
+    .movie-card h3 {
+        padding: 10px 9px 5px;
+        font-size: 13px;
+    }
+
+    .movie-card .movie-rating {
+        padding: 5px 9px 12px;
+    }
+}
+
+/* მობილური */
+@media (max-width: 520px) {
+    .movies-page {
+        padding: 18px 0;
+    }
+
+    .movies-page h2 {
+        font-size: 22px;
+        margin-bottom: 18px;
+    }
+
+    .movies-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px 11px;
+    }
+
+    .movie-card {
+        border-radius: 9px;
+    }
+
+    .movie-card h3 {
+        min-height: 38px;
+        padding: 9px 8px 4px;
+        font-size: 12px;
+    }
+
+    .movie-card .movie-rating {
+        padding: 4px 8px 10px;
+        font-size: 12px;
+    }
+}
+
+/* მოძრაობის შემცირების პარამეტრი */
+@media (prefers-reduced-motion: reduce) {
+
+    .movie-card,
+    .movie-card img {
+        transition: none;
+    }
+
+    .movie-card-link:hover .movie-card {
+        transform: none;
+    }
+}

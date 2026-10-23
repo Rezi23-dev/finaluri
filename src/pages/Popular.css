@@ -1,0 +1,134 @@
+.popular-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 32px 5%;
+    background: #0f0f0f;
+    color: #fff;
+}
+
+.popular-page h2 {
+    margin-bottom: 28px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #e5cc00;
+}
+
+.popular-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 25px 20px;
+}
+
+.popular-card-link {
+    display: block;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 12px;
+    outline-offset: 4px;
+}
+
+.popular-card {
+    height: 100%;
+    overflow: hidden;
+    background: #1b1b1b;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.popular-card-link:hover .popular-card {
+    transform: translateY(-7px);
+    border-color: #e5cc00;
+    box-shadow: 0 8px 25px rgb(229 204 0 / 12%);
+}
+
+.popular-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    background: #292929;
+}
+
+.popular-card h3 {
+    margin: 14px 12px 8px;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.popular-rating {
+    margin: 0 12px 15px;
+    color: #e5cc00;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.popular-message {
+    padding: 30px;
+    color: #ff7777;
+    text-align: center;
+}
+
+/* ლეპტოპები */
+@media (max-width: 1200px) {
+    .popular-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* პლანშეტები */
+@media (max-width: 850px) {
+    .popular-page {
+        padding: 25px 4%;
+    }
+
+    .popular-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px 14px;
+    }
+}
+
+/* მობილურები */
+@media (max-width: 520px) {
+    .popular-page {
+        padding: 20px 4%;
+    }
+
+    .popular-page h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .popular-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px 12px;
+    }
+
+    .popular-card h3 {
+        margin: 10px 9px 6px;
+        font-size: 14px;
+    }
+
+    .popular-rating {
+        margin: 0 9px 12px;
+        font-size: 13px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .popular-card {
+        transition: none;
+    }
+
+    .popular-card-link:hover .popular-card {
+        transform: none;
+    }
+}

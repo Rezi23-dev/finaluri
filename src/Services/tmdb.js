@@ -119,3 +119,35 @@ export const getVideos = async (mediaType, id) => {
 
     return trailer || null;
 };
+
+
+export const getMovies = async (page = 1) => {
+    const response = await fetch(
+        `${BASE_URL}/discover/movie?language=en-US&sort_by=popularity.desc&page=${page}`,
+        options
+    );
+
+    if (!response.ok) {
+        throw new Error("ფილმების ჩატვირთვა ვერ მოხერხდა");
+    }
+
+    const data = await response.json();
+
+    return data.results;
+};
+
+
+
+export const getPopularMovies = async (page = 1) => {
+    const response = await fetch(
+        `${BASE_URL}/movie/popular?language=en-US&page=${page}`,
+        options
+    );
+
+    if (!response.ok) {
+        throw new Error("პოპულარული ფილმების ჩატვირთვა ვერ მოხერხდა");
+    }
+
+    const data = await response.json();
+    return data.results;
+};
