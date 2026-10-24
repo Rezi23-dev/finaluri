@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getUpcoming } from "../../Services/tmdb";
 import "./Banner.css";
 
-const IMAGE_URL = "https://image.tmdb.org/t/p/w1280";
+const IMAGE_URL = "https://image.tmdb.org/t/p";
 
 const Banner = () => {
     const [movies, setMovies] = useState([]);
@@ -48,10 +48,13 @@ const Banner = () => {
         <section className="banner">
             <img
                 className="banner-img"
-                src={IMAGE_URL}
+                src={`${IMAGE_URL}/w1280${movie.backdrop_path}`}
+                srcSet={`
+        ${IMAGE_URL}/w780${movie.backdrop_path} 780w,
+        ${IMAGE_URL}/w1280${movie.backdrop_path} 1280w
+    `}
+                sizes="(max-width: 768px) 100vw, 853px"
                 alt={movie.title || movie.name}
-                width="1280"
-                height="720"
                 fetchPriority="high"
                 loading="eager"
                 decoding="async"
