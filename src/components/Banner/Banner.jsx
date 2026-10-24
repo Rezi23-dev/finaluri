@@ -47,12 +47,13 @@ const Banner = () => {
     return (
         <section className="banner">
             <img
-                key={movie.id}
-                src={`${IMAGE_URL}${movie.backdrop_path}`}
-                alt={movie.title}
                 className="banner-img"
-                fetchPriority={activeIndex === 0 ? "high" : "auto"}
-                loading={activeIndex === 0 ? "eager" : "lazy"}
+                src={IMAGE_URL}
+                alt={movie.title || movie.name}
+                width="1280"
+                height="720"
+                fetchPriority="high"
+                loading="eager"
                 decoding="async"
             />
 
