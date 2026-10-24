@@ -1,9 +1,8 @@
-
 import { useEffect, useState } from "react";
 import { getUpcoming } from "../../Services/tmdb";
 import "./Banner.css";
 
-const IMAGE_URL = "https://image.tmdb.org/t/p/original";
+const IMAGE_URL = "https://image.tmdb.org/t/p/w1280";
 
 const Banner = () => {
     const [movies, setMovies] = useState([]);
@@ -52,6 +51,9 @@ const Banner = () => {
                 src={`${IMAGE_URL}${movie.backdrop_path}`}
                 alt={movie.title}
                 className="banner-img"
+                fetchPriority={activeIndex === 0 ? "high" : "auto"}
+                loading={activeIndex === 0 ? "eager" : "lazy"}
+                decoding="async"
             />
 
             <div className="banner-overlay">

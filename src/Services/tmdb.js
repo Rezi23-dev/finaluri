@@ -11,23 +11,17 @@ const options = {
 };
 
 export const getTrending = async () => {
-    const pages = await Promise.all(
-        [1, 2, 3, 4, 5].map(async (page) => {
-            const response = await fetch(
-                `${BASE_URL}/trending/all/week?language=en-US&page=${page}`,
-                options
-            );
-
-            if (!response.ok) {
-                throw new Error("ფილმების ჩატვირთვა ვერ მოხერხდა");
-            }
-
-            const data = await response.json();
-            return data.results;
-        })
+    const response = await fetch(
+        `${BASE_URL}/trending/all/week?language=en-US&page=1`,
+        options
     );
 
-    return pages.flat().slice(0, 50);
+    if (!response.ok) {
+        throw new Error("ფილმების ჩატვირთვა ვერ მოხერხდა");
+    }
+
+    const data = await response.json();
+    return data.results;
 };
 
 
@@ -35,41 +29,45 @@ export const getTrending = async () => {
 
 
 export const getUpcoming = async () => {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Tbilisi",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    }).format(new Date());
+    const movies = [];
 
-    const pages = await Promise.all(
-        [1, 2, 3].map(async (page) => {
-            const response = await fetch(
-                `${BASE_URL}/movie/upcoming?language=en-US&page=${page}`,
-                options
-            );
+    for (let page = 1; page <= 3 && movies.length < 5; page++) {
+        const response = await fetch(
+            `${BASE_URL}/movie/upcoming?language=en-US&page=${page}`,
+            options
+        );
 
-            if (!response.ok) {
-                throw new Error("მომავალი ფილმების წამოღება ვერ მოხერხდა");
-            }
+        if (!response.ok) {
+            throw new Error("მომავალი ფილმების წამოღება ვერ მოხერხდა");
+        }
 
-            const data = await response.json();
-            return data.results;
-        })
-    );
+        const data = await response.json();
 
-    return pages
-        .flat()
-        .filter(
+        const filteredMovies = data.results.filter(
             (movie) =>
                 movie.backdrop_path &&
                 movie.release_date >= today
+        );
+
+        movies.push(...filteredMovies);
+    }
+
+    return movies
+        .filter(
+            (movie, index, array) =>
+                array.findIndex((item) => item.id === movie.id) === index
         )
         .sort((a, b) =>
             a.release_date.localeCompare(b.release_date)
         )
-        .filter(
-            (movie, index, movies) =>
-                movies.findIndex((item) => item.id === movie.id) === index
-        )
         .slice(0, 5);
 };
-
 
 
 

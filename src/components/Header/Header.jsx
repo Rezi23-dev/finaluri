@@ -23,7 +23,7 @@ const Header = () => {
 
             <button
                 className={`burger-menu ${menuOpen ? "open" : ""}`}
-                onClick={() => setMenuOpen(!menuOpen)}
+                onClick={() => setMenuOpen((prev) => !prev)}
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={menuOpen}
                 aria-controls="header-navigation"

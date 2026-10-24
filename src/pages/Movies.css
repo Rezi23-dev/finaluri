@@ -82,10 +82,8 @@
 }
 
 /* Hover ეფექტი */
-.movie-card-link:hover .movie-card {
-    transform: translateY(-6px);
-    border-color: #e5cc00;
-    box-shadow: 0 10px 25px rgb(0 0 0 / 35%);
+.movie-card-link:hover .movie-card img {
+    filter: brightness(1.08);
 }
 
 .movie-card-link:hover .movie-card img {

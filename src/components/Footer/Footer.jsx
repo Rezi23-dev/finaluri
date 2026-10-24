@@ -1,14 +1,15 @@
 import React from 'react';
 import './Footer.css';
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
         <footer className="footer">
             <div className="footer-top">
                 <div className="footer-brand">
-                    <a href="/" className="footer-logo">
+                    <Link to="/" className="footer-logo">
                         Movies<span>Hub</span>
-                    </a>
+                    </Link>
 
                     <p className="footer-description">
                         Discover movies, explore popular titles,

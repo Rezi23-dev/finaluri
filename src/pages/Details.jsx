@@ -6,7 +6,7 @@ import "./Details.css";
 import Loader from "../components/Loader/Loader";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
-const BACKDROP_URL = "https://image.tmdb.org/t/p/original";
+const BACKDROP_URL = "https://image.tmdb.org/t/p/w1280";
 
 const Details = () => {
     const { mediaType, id } = useParams();
@@ -26,24 +26,20 @@ const Details = () => {
             setTrailer(null);
 
             try {
-                const data = await getDetails(mediaType, id);
+                const [data, video] = await Promise.all([
+                    getDetails(mediaType, id),
+                    getVideos(mediaType, id).catch(() => null),
+                ]);
 
                 if (!cancelled) {
                     setMovie(data);
-                }
-
-                try {
-                    const video = await getVideos(mediaType, id);
-
-                    if (!cancelled) {
-                        setTrailer(video);
-                    }
-                } catch {
-
+                    setTrailer(video);
                 }
             } catch (err) {
                 if (!cancelled) {
-                    setError(err.message);
+                    setError(
+                        err.message || "ფილმის ინფორმაციის ჩატვირთვა ვერ მოხერხდა"
+                    );
                 }
             } finally {
                 if (!cancelled) {
@@ -86,7 +82,11 @@ const Details = () => {
                                 ? `${IMAGE_URL}${movie.poster_path}`
                                 : "/no-poster.png"
                         }
-                        alt={title}
+                        alt={title || "Movie poster"}
+                        loading="eager"
+                        decoding="async"
+                        width="250"
+                        height="375"
                     />
 
                     <div className="details-text">
@@ -118,6 +118,7 @@ const Details = () => {
                             <iframe
                                 src={`https://www.youtube.com/embed/${trailer.key}`}
                                 title={`${title} trailer`}
+                                loading="lazy"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 referrerPolicy="strict-origin-when-cross-origin"
                                 allowFullScreen

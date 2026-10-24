@@ -24,7 +24,9 @@ const Movies = ({ filters = { search: "", genre: "" } }) => {
         }
       } catch (err) {
         if (!cancelled) {
-          setError(err.message || "ფილმების ჩატვირთვა ვერ მოხერხდა");
+          setError(
+            err.message || "ფილმების ჩატვირთვა ვერ მოხერხდა"
+          );
         }
       } finally {
         if (!cancelled) {
@@ -43,15 +45,17 @@ const Movies = ({ filters = { search: "", genre: "" } }) => {
   if (loading) return <Loader />;
   if (error) return <p className="movies-message">{error}</p>;
 
-  const filteredMovies = movies.filter((movie) => {
-    const title = movie.title || "";
-    const searchText = (filters.search || "").trim().toLowerCase();
+  const searchText = (filters.search || "").trim().toLowerCase();
+  const selectedGenre = Number(filters.genre);
 
-    const matchesSearch = title.toLowerCase().includes(searchText);
+  const filteredMovies = movies.filter((movie) => {
+    const title = (movie.title || "").toLowerCase();
+
+    const matchesSearch = title.includes(searchText);
 
     const matchesGenre =
       !filters.genre ||
-      movie.genre_ids?.includes(Number(filters.genre));
+      movie.genre_ids?.includes(selectedGenre);
 
     return matchesSearch && matchesGenre;
   });
@@ -77,8 +81,11 @@ const Movies = ({ filters = { search: "", genre: "" } }) => {
                       ? `${IMAGE_URL}${movie.poster_path}`
                       : "/no-poster.png"
                   }
-                  alt={movie.title}
+                  alt={movie.title || "Movie poster"}
                   loading="lazy"
+                  decoding="async"
+                  width="250"
+                  height="375"
                 />
 
                 <h3>{movie.title}</h3>

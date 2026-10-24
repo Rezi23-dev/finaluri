@@ -14,7 +14,6 @@
     height: 100%;
     object-fit: cover;
     object-position: center 25%;
-    animation: bannerFade 0.8s ease;
 }
 
 .banner-overlay {
@@ -101,17 +100,7 @@
     background: #151515;
 }
 
-@keyframes bannerFade {
-    from {
-        opacity: 0.5;
-        transform: scale(1.02);
-    }
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
 
 @media (max-width: 768px) {
     .banner {

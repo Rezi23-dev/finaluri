@@ -42,15 +42,17 @@ const Home = ({ filters = { search: "", genre: "" } }) => {
     if (loading) return <p>იტვირთება...</p>;
     if (error) return <p>{error}</p>;
 
-    const filteredItems = items.filter((item) => {
-        const title = item.title || item.name || "";
-        const searchText = (filters.search || "").trim().toLowerCase();
+    const searchText = (filters.search || "").trim().toLowerCase();
+    const selectedGenre = Number(filters.genre);
 
-        const matchesSearch = title.toLowerCase().includes(searchText);
+    const filteredItems = items.filter((item) => {
+        const title = (item.title || item.name || "").toLowerCase();
+
+        const matchesSearch = title.includes(searchText);
 
         const matchesGenre =
             !filters.genre ||
-            item.genre_ids?.includes(Number(filters.genre));
+            item.genre_ids?.includes(selectedGenre);
 
         return matchesSearch && matchesGenre;
     });
@@ -82,6 +84,9 @@ const Home = ({ filters = { search: "", genre: "" } }) => {
                                         }
                                         alt={item.title || item.name}
                                         loading="lazy"
+                                        decoding="async"
+                                        width="250"
+                                        height="375"
                                     />
 
                                     <h3>{item.title || item.name}</h3>

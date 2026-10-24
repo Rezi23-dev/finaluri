@@ -52,9 +52,7 @@ export const Filter = ({ onFilter }) => {
                     className="genre-select"
                     value={genre}
                     onChange={(e) => {
-                        const value = e.target.value;
-                        setGenre(value);
-                        handleFilter(search, value);
+                        setSearch(e.target.value);
                     }}
                 >
                     {genres.map((item) => (
