@@ -149,3 +149,25 @@ export const getPopularMovies = async (page = 1) => {
     const data = await response.json();
     return data.results;
 };
+
+
+
+
+export const searchMovies = async (query) => {
+    const response = await fetch(
+        `${BASE_URL}/search/multi?query=${encodeURIComponent(query)}&language=en-US&page=1`,
+        options
+    );
+
+    if (!response.ok) {
+        throw new Error("ძიება ვერ შესრულდა");
+    }
+
+    const data = await response.json();
+
+    return data.results.filter(
+        (item) =>
+            item.media_type === "movie" ||
+            item.media_type === "tv"
+    );
+};

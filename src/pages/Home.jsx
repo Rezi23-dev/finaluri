@@ -1,10 +1,10 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getTrending } from "../Services/tmdb";
+import { getTrending, searchMovies } from "../Services/tmdb";
 import "./Home.css";
 
-const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
+const IMAGE_URL = "https://image.tmdb.org/t/p";
 
 const Home = ({ filters = { search: "", genre: "" } }) => {
     const [items, setItems] = useState([]);
@@ -14,16 +14,25 @@ const Home = ({ filters = { search: "", genre: "" } }) => {
     useEffect(() => {
         let cancelled = false;
 
-        const fetchTrending = async () => {
+        const fetchItems = async () => {
+            setLoading(true);
+            setError("");
+
             try {
-                const data = await getTrending();
+                const query = filters.search?.trim();
+
+                const data = query
+                    ? await searchMovies(query)
+                    : await getTrending();
 
                 if (!cancelled) {
                     setItems(data);
                 }
             } catch (err) {
                 if (!cancelled) {
-                    setError(err.message || "მონაცემების ჩატვირთვა ვერ მოხერხდა");
+                    setError(
+                        err.message || "მონაცემების ჩატვირთვა ვერ მოხერხდა"
+                    );
                 }
             } finally {
                 if (!cancelled) {
@@ -32,40 +41,29 @@ const Home = ({ filters = { search: "", genre: "" } }) => {
             }
         };
 
-        fetchTrending();
+        fetchItems();
 
         return () => {
             cancelled = true;
         };
-    }, []);
+    }, [filters.search]);
 
     if (loading) return <p>იტვირთება...</p>;
     if (error) return <p>{error}</p>;
 
-    const searchText = (filters.search || "").trim().toLowerCase();
-    const selectedGenre = Number(filters.genre);
-
-    const filteredItems = items.filter((item) => {
-        const title = (item.title || item.name || "").toLowerCase();
-
-        const matchesSearch = title.includes(searchText);
-
-        const matchesGenre =
-            !filters.genre ||
-            item.genre_ids?.includes(selectedGenre);
-
-        return matchesSearch && matchesGenre;
-    });
-
     return (
         <section className="home">
-            <h2>Trending Movies &amp; TV Shows</h2>
+            <h2>
+                {filters.search?.trim()
+                    ? `ძიების შედეგები: ${filters.search}`
+                    : "Trending Movies & TV Shows"}
+            </h2>
 
-            {filteredItems.length === 0 ? (
+            {items.length === 0 ? (
                 <p>შედეგები ვერ მოიძებნა.</p>
             ) : (
                 <div className="movie-grid">
-                    {filteredItems.map((item) => {
+                    {items.map((item) => {
                         const mediaType =
                             item.media_type === "tv" ? "tv" : "movie";
 
@@ -79,9 +77,19 @@ const Home = ({ filters = { search: "", genre: "" } }) => {
                                     <img
                                         src={
                                             item.poster_path
-                                                ? `${IMAGE_URL}${item.poster_path}`
+                                                ? `${IMAGE_URL}/w342${item.poster_path}`
                                                 : "/no-poster.png"
                                         }
+                                        srcSet={
+                                            item.poster_path
+                                                ? `
+                ${IMAGE_URL}/w185${item.poster_path} 185w,
+                ${IMAGE_URL}/w342${item.poster_path} 342w,
+                ${IMAGE_URL}/w500${item.poster_path} 500w
+            `
+                                                : undefined
+                                        }
+                                        sizes="(max-width: 600px) 45vw, (max-width: 900px) 30vw, 250px"
                                         alt={item.title || item.name}
                                         loading="lazy"
                                         decoding="async"
@@ -92,11 +100,14 @@ const Home = ({ filters = { search: "", genre: "" } }) => {
                                     <h3>{item.title || item.name}</h3>
 
                                     <p>
-                                        {mediaType === "movie" ? "ფილმი" : "სერიალი"}
+                                        {mediaType === "movie"
+                                            ? "ფილმი"
+                                            : "სერიალი"}
                                     </p>
 
                                     <p>
-                                        ⭐ {item.vote_average?.toFixed(1) ?? "N/A"}
+                                        ⭐{" "}
+                                        {item.vote_average?.toFixed(1) ?? "N/A"}
                                     </p>
                                 </article>
                             </Link>
