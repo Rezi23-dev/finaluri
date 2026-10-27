@@ -1,35 +1,23 @@
 
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Home from "./pages/Home";
-import Movies from "./pages/Movies";
-import Popular from "./pages/Popular";
-import Details from "./pages/Details";
+const Home = lazy(() => import("./pages/Home"));
+const Movies = lazy(() => import("./pages/Movies"));
+const Popular = lazy(() => import("./pages/Popular"));
+const Details = lazy(() => import("./pages/Details"));
 
-const Router = ({ filters }) => {
+function Router() {
     return (
-        <Routes>
-            <Route
-                path="/"
-                element={<Home filters={filters} />}
-            />
-
-            <Route
-                path="/movies"
-                element={<Movies filters={filters} />}
-            />
-
-            <Route
-                path="/popular"
-                element={<Popular filters={filters} />}
-            />
-
-            <Route
-                path="/details/:mediaType/:id"
-                element={<Details />}
-            />
-        </Routes>
+        <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/movies" element={<Movies />} />
+                <Route path="/popular" element={<Popular />} />
+                <Route path="/details/:id" element={<Details />} />
+            </Routes>
+        </Suspense>
     );
-};
+}
 
 export default Router;

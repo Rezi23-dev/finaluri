@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getMovies } from "../Services/tmdb";
 import Loader from "../components/Loader/Loader";
+import OptimizedImage from "../components/OptimizedImage";
 import "./Movies.css";
-
-const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
 const Movies = ({ filters = { search: "", genre: "" } }) => {
   const [movies, setMovies] = useState([]);
@@ -75,18 +74,26 @@ const Movies = ({ filters = { search: "", genre: "" } }) => {
               className="movie-card-link"
             >
               <article className="movie-card">
-                <img
-                  src={
-                    movie.poster_path
-                      ? `${IMAGE_URL}${movie.poster_path}`
-                      : "/no-poster.png"
-                  }
-                  alt={movie.title || "Movie poster"}
-                  loading="lazy"
-                  decoding="async"
-                  width="250"
-                  height="375"
-                />
+                {movie.poster_path ? (
+                  <OptimizedImage
+                    path={movie.poster_path}
+                    alt={movie.title || "Movie poster"}
+                    size="w342"
+                    width={250}
+                    height={375}
+                    className="movie-poster"
+                  />
+                ) : (
+                  <img
+                    src="/no-poster.png"
+                    alt="Poster unavailable"
+                    width={250}
+                    height={375}
+                    className="movie-poster"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
 
                 <h3>{movie.title}</h3>
 
