@@ -76,7 +76,7 @@ const Movies = ({ filters = { search: "", genre: "" } }) => {
               <article className="movie-card">
                 {movie.poster_path ? (
                   <OptimizedImage
-                    path={movie.poster_path}
+                    path={"https://image.tmdb.org/t/p/w342/" + movie.poster_path}
                     alt={movie.title || "Movie poster"}
                     size="w342"
                     width={250}
