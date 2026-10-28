@@ -10,17 +10,34 @@ const OptimizedImage = ({
     className,
     loading = "lazy",
     fetchPriority,
+    sizes = "(max-width: 600px) 42vw, (max-width: 900px) 25vw, 220px",
     ...props
 }) => {
     if (!path) return null;
 
-    const src = path.startsWith("http")
+    const isAbsoluteUrl = /^https?:\/\//i.test(path);
+    const isLocalPath = path.startsWith("/");
+
+    const src = isAbsoluteUrl
         ? path
-        : `${TMDB_IMAGE_URL}/${size}${path}`;
+        : isLocalPath
+            ? path
+            : `${TMDB_IMAGE_URL}/${size}${path}`;
+
+    const isTmdbImage = !isAbsoluteUrl && !isLocalPath;
+
+    const srcSet = isTmdbImage
+        ? [
+            `${TMDB_IMAGE_URL}/w185${path} 185w`,
+            `${TMDB_IMAGE_URL}/w342${path} 342w`,
+        ].join(", ")
+        : undefined;
 
     return (
         <img
             src={src}
+            srcSet={srcSet}
+            sizes={sizes}
             alt={alt}
             width={width}
             height={height}

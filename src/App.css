@@ -9,6 +9,27 @@ body,
   margin: 0;
 }
 
+
+/* CLS-ის დასაკლებად */
+.movie-poster {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  /* აიძულებს ეკრანს სურათის ჩატვირთვამდე დაიკავოს ადგილი */
+  background-color: #1e1e1e;
+  object-fit: cover;
+  display: block;
+}
+
+/* ბანერის სურათისთვის */
+.banner-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background-color: #111;
+  object-fit: cover;
+}
+
 body {
   min-width: 320px;
   background: #040404;

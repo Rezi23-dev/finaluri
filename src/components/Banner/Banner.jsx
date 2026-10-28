@@ -1,9 +1,12 @@
-
 import { useEffect, useState } from "react";
 import { getUpcoming } from "../../Services/tmdb";
 import "./Banner.css";
 
-const IMAGE_URL = "https://image.tmdb.org/t/p";
+const TMDB_IMAGE_URL = "https://image.tmdb.org/t/p";
+
+const getOptimizedUrl = (url, width) => {
+    return `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=${width}&output=webp&q=80`;
+};
 
 const Banner = () => {
     const [movies, setMovies] = useState([]);
@@ -16,9 +19,8 @@ const Banner = () => {
         const fetchMovies = async () => {
             try {
                 const data = await getUpcoming();
-
                 if (!cancelled) {
-                    setMovies(data);
+                    setMovies(Array.isArray(data) ? data : []);
                 }
             } catch (error) {
                 if (!cancelled) {
@@ -60,22 +62,34 @@ const Banner = () => {
     if (!movies.length) return null;
 
     const movie = movies[activeIndex];
+    const imagePath = movie.backdrop_path;
 
-    const imageUrl = movie.backdrop_path
-        ? `${IMAGE_URL}/w1280${movie.backdrop_path}`
-        : null;
+    // TMDB ორიგინალი ლინკები
+    const raww500 = imagePath ? `${TMDB_IMAGE_URL}/w500${imagePath}` : null;
+    const raww780 = imagePath ? `${TMDB_IMAGE_URL}/w780${imagePath}` : null;
+    const raww1280 = imagePath ? `${TMDB_IMAGE_URL}/w1280${imagePath}` : null;
+
+    // WebP პროქსი ლინკები
+    const imageUrl = raww780 ? getOptimizedUrl(raww780, 780) : null;
+    const imageSrcSet = imagePath
+        ? [
+            `${getOptimizedUrl(raww500, 500)} 500w`,
+            `${getOptimizedUrl(raww780, 780)} 780w`,
+            `${getOptimizedUrl(raww1280, 1280)} 1280w`,
+        ].join(", ")
+        : undefined;
 
     return (
         <section className="banner">
             {imageUrl && (
                 <img
+                    key={movie.id}
                     className="banner-img"
                     src={imageUrl}
-                    srcSet={`
-                        ${IMAGE_URL}/w780${movie.backdrop_path} 780w,
-                        ${IMAGE_URL}/w1280${movie.backdrop_path} 1280w
-                    `}
+                    srcSet={imageSrcSet}
                     sizes="(max-width: 768px) 100vw, 853px"
+                    width="1280"
+                    height="720"
                     alt={movie.title || movie.name || "Upcoming movie"}
                     fetchPriority="high"
                     loading="eager"

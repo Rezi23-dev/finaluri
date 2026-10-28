@@ -95,14 +95,9 @@
 }
 
 .banner-loading {
-    min-height: 500px;
+  min-height: 500px;
 }
 
-@media (max-width: 768px) {
-    .banner-loading {
-        min-height: 320px;
-    }
-}
 
 
 @media (max-width: 768px) {
